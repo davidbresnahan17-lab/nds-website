@@ -4,74 +4,50 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Non-Dilutive Space — Space Funding Intelligence</title>
-  <meta name="description" content="Weekly funding intelligence for the space &amp; connectivity economy. SBIR, federal grants, foundation funding, RFPs, space news and ops/grants jobs — curated every Tuesday."/>
+  <meta name="description" content="Weekly funding intelligence for the space & connectivity economy. SBIR, federal grants, foundation funding, RFPs, space news and ops/grants jobs — curated every Tuesday."/>
   <meta property="og:title" content="Non-Dilutive Space"/>
-  <meta property="og:description" content="Weekly funding intelligence for the space &amp; connectivity economy."/>
+  <meta property="og:description" content="Weekly funding intelligence for the space & connectivity economy."/>
   <meta property="og:url" content="https://nondilutivespace.com"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
  
     :root {
+      --black:      #020408;
+      --deep:       #060C14;
+      --navy:       #0A1628;
       --blue:       #0C447C;
       --blue-mid:   #185FA5;
       --blue-light: #B5D4F4;
-      --green:      #00A060;
-      --green-light:#9FE1CB;
+      --green:      #00E87A;
+      --green-mid:  #00A060;
+      --green-dim:  rgba(0,232,122,0.12);
+      --green-border: rgba(0,232,122,0.3);
       --white:      #FFFFFF;
-      --off-white:  #F7F9FC;
       --gray:       #6B7280;
-      --gray-light: #E8EDF5;
+      --gray-light: rgba(255,255,255,0.08);
+      --text-muted: rgba(255,255,255,0.45);
+      --text-dim:   rgba(255,255,255,0.65);
+      --text-main:  rgba(255,255,255,0.92);
     }
  
     html { scroll-behavior: smooth; }
  
     body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--white);
-      color: var(--blue);
+      font-family: 'Barlow', sans-serif;
+      background: var(--black);
+      color: var(--text-main);
       min-height: 100vh;
       overflow-x: hidden;
     }
  
-    /* ── GRID BACKGROUND ── */
-    body::before {
-      content: '';
+    /* ── STAR FIELD ── */
+    #stars-canvas {
       position: fixed;
       inset: 0;
-      background-image:
-        linear-gradient(var(--gray-light) 1px, transparent 1px),
-        linear-gradient(90deg, var(--gray-light) 1px, transparent 1px);
-      background-size: 60px 60px;
-      opacity: 0.5;
       z-index: 0;
       pointer-events: none;
-    }
- 
-    /* ── ORBITAL DECORATION ── */
-    .orbital-bg {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 900px;
-      height: 900px;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.06;
-    }
- 
-    /* ── LAYOUT ── */
-    .page {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 24px;
     }
  
     /* ── NAV ── */
@@ -82,98 +58,125 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 40px;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--gray-light);
+      padding: 18px 48px;
+      background: rgba(2,4,8,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.3s;
     }
  
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       text-decoration: none;
     }
  
     .nav-nds {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 26px;
-      font-weight: 700;
-      background: linear-gradient(180deg, #1a6fad 0%, #5BA3D9 28%, #0C447C 50%, #083260 74%, #0a3d73 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: var(--white);
       line-height: 1;
     }
  
+    .nav-nds span { color: var(--green); }
+ 
     .nav-divider {
       width: 1px;
-      height: 20px;
-      background: var(--gray-light);
+      height: 22px;
+      background: rgba(255,255,255,0.15);
     }
  
     .nav-tagline {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 400;
-      color: var(--gray);
-      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
  
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 28px;
     }
  
     .nav-links a {
       font-size: 13px;
-      color: var(--gray);
+      font-weight: 500;
+      color: var(--text-muted);
       text-decoration: none;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.05em;
       transition: color 0.2s;
     }
  
-    .nav-links a:hover { color: var(--blue); }
+    .nav-links a:hover { color: var(--white); }
  
     .nav-cta {
-      background: var(--blue) !important;
-      color: white !important;
-      padding: 8px 18px;
-      border-radius: 6px;
-      font-weight: 500 !important;
-      font-size: 13px !important;
-      transition: background 0.2s !important;
+      background: var(--green) !important;
+      color: #000 !important;
+      padding: 9px 20px !important;
+      border-radius: 4px !important;
+      font-family: 'Barlow Condensed', sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+      transition: opacity 0.2s, transform 0.1s !important;
     }
  
-    .nav-cta:hover { background: var(--blue-mid) !important; }
+    .nav-cta:hover { opacity: 0.88 !important; color: #000 !important; }
  
     /* ── HERO ── */
     .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
       text-align: center;
-      max-width: 680px;
-      margin: 80px auto 0;
-      animation: fadeUp 0.8s ease both;
+      overflow: hidden;
     }
  
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* Launch pad at bottom of hero */
+    #launch-canvas {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 500px;
+      pointer-events: none;
+      z-index: 0;
+    }
+ 
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
     }
  
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: var(--off-white);
-      border: 1px solid var(--gray-light);
+      gap: 8px;
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
       border-radius: 100px;
-      padding: 6px 14px;
+      padding: 7px 16px;
       font-size: 12px;
-      font-weight: 500;
-      color: var(--blue-mid);
-      letter-spacing: 0.5px;
-      margin-bottom: 32px;
-      animation: fadeUp 0.8s ease 0.1s both;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.2s forwards;
     }
  
     .badge-dot {
@@ -185,471 +188,1147 @@
     }
  
     @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.6; transform: scale(0.8); }
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(0,232,122,0.4); }
+      50% { opacity: 0.8; transform: scale(0.85); box-shadow: 0 0 0 4px rgba(0,232,122,0); }
     }
  
-    /* ── BIG NDS MARK ── */
-    .hero-mark {
-      margin: 0 auto 24px;
-      animation: fadeUp 0.8s ease 0.15s both;
+    .hero-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(72px, 13vw, 140px);
+      font-weight: 900;
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 6px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.35s forwards;
     }
  
-    .hero-title {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: clamp(52px, 10vw, 96px);
-      font-weight: 700;
-      line-height: 1;
-      background: linear-gradient(180deg, #1a6fad 0%, #5BA3D9 28%, #0C447C 50%, #083260 74%, #0a3d73 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 8px;
-      animation: fadeUp 0.8s ease 0.2s both;
-    }
+    .hero-headline .green { color: var(--green); }
  
-    .hero-wordmark {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 32px;
-      animation: fadeUp 0.8s ease 0.25s both;
-    }
- 
-    .wm-blue  { color: var(--blue); }
-    .wm-green { color: var(--green); }
- 
-    .wm-divider {
-      width: 40px;
-      height: 1.5px;
-      background: var(--green);
-      position: relative;
-    }
- 
-    .wm-divider::before,
-    .wm-divider::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--green);
-    }
- 
-    .wm-divider::before { left: -6px; }
-    .wm-divider::after  { right: -6px; }
- 
-    .hero-sub {
-      font-size: clamp(17px, 2.5vw, 21px);
+    .hero-sub-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(18px, 3vw, 28px);
       font-weight: 300;
-      color: var(--blue);
-      line-height: 1.5;
-      margin-bottom: 16px;
-      animation: fadeUp 0.8s ease 0.3s both;
-    }
- 
-    .hero-sub strong {
-      font-weight: 500;
-      color: var(--blue);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.45s forwards;
     }
  
     .hero-desc {
-      font-size: 15px;
-      color: var(--gray);
-      line-height: 1.7;
-      margin-bottom: 40px;
-      animation: fadeUp 0.8s ease 0.35s both;
+      font-size: clamp(16px, 2vw, 19px);
+      font-weight: 300;
+      color: var(--text-dim);
+      line-height: 1.65;
+      max-width: 620px;
+      margin: 0 auto 48px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.55s forwards;
     }
  
-    /* ── SUBSCRIBE FORM ── */
-    .subscribe-wrap {
-      animation: fadeUp 0.8s ease 0.4s both;
+    .hero-desc strong {
+      font-weight: 600;
+      color: var(--white);
     }
  
-    .subscribe-form {
+    .hero-cta-group {
       display: flex;
-      gap: 10px;
-      max-width: 480px;
-      margin: 0 auto 12px;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.65s forwards;
     }
  
-    .subscribe-input {
-      flex: 1;
-      padding: 14px 18px;
-      border: 1.5px solid var(--gray-light);
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      color: var(--blue);
-      background: white;
-      outline: none;
-      transition: border-color 0.2s;
-    }
- 
-    .subscribe-input:focus { border-color: var(--blue-mid); }
-    .subscribe-input::placeholder { color: #9CA3AF; }
- 
-    .subscribe-btn {
-      padding: 14px 24px;
-      background: var(--blue);
-      color: white;
+    .btn-primary {
+      background: var(--green);
+      color: #000;
       border: none;
-      border-radius: 8px;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 1px;
+      padding: 16px 36px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 4px;
       cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      white-space: nowrap;
-    }
- 
-    .subscribe-btn:hover  { background: var(--blue-mid); }
-    .subscribe-btn:active { transform: scale(0.98); }
- 
-    .subscribe-note {
-      font-size: 12px;
-      color: var(--gray);
-      text-align: center;
-    }
- 
-    .subscribe-note a {
-      color: var(--green);
       text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s, transform 0.15s;
     }
+ 
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary:active { transform: scale(0.98); }
+ 
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 15px 28px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+ 
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.45); color: var(--white); }
  
     /* ── PILLARS ── */
     .pillars {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-top: 48px;
-      animation: fadeUp 0.8s ease 0.5s both;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.75s forwards;
     }
  
     .pillar {
       display: flex;
       align-items: center;
-      gap: 7px;
-      background: var(--off-white);
-      border: 1px solid var(--gray-light);
+      gap: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 100px;
       padding: 8px 16px;
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 13px;
-      font-weight: 500;
-      color: var(--blue);
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: border-color 0.2s, color 0.2s;
     }
  
+    .pillar:hover { border-color: var(--green-border); color: var(--green); }
+ 
     .pillar-dot {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--green);
       flex-shrink: 0;
     }
  
+    /* ── SCROLL INDICATOR ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.8s forwards;
+    }
+ 
+    .scroll-hint span {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+ 
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(0,232,122,0.6), transparent);
+      animation: scrollPulse 2s ease infinite 2s;
+    }
+ 
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 1; transform: scaleY(1); }
+      50% { opacity: 0.4; transform: scaleY(0.6); }
+    }
+ 
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+ 
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+ 
+    /* ── SECTION SHARED ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+ 
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 40px;
+    }
+ 
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+ 
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 2px;
+      background: var(--green);
+    }
+ 
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(40px, 6vw, 68px);
+      font-weight: 800;
+      line-height: 0.95;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+ 
+    .section-sub {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--text-dim);
+      line-height: 1.65;
+      max-width: 560px;
+    }
+ 
     /* ── WHAT YOU GET ── */
-    .features {
+    .features-section {
+      background: var(--deep);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+ 
+    .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      max-width: 960px;
-      width: 100%;
-      margin-top: 64px;
-      animation: fadeUp 0.8s ease 0.55s both;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 60px;
     }
  
     .feature-card {
-      background: white;
-      border: 1px solid var(--gray-light);
-      border-radius: 12px;
-      padding: 20px;
-      transition: border-color 0.2s, transform 0.2s;
+      background: var(--deep);
+      padding: 32px 28px;
+      transition: background 0.2s;
+      position: relative;
     }
  
-    .feature-card:hover {
-      border-color: var(--blue-light);
-      transform: translateY(-2px);
+    .feature-card:hover { background: rgba(0,232,122,0.04); }
+ 
+    .feature-card.coming-soon { opacity: 0.6; }
+ 
+    .feature-tag {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+ 
+    .tag-live {
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      color: var(--green);
+    }
+ 
+    .tag-soon {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text-muted);
     }
  
     .feature-icon {
-      width: 36px;
-      height: 36px;
+      width: 42px;
+      height: 42px;
       border-radius: 8px;
-      background: var(--off-white);
-      border: 1px solid var(--gray-light);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
  
     .feature-title {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 15px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
       font-weight: 700;
-      letter-spacing: 0.5px;
-      color: var(--blue);
-      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 10px;
     }
  
     .feature-desc {
-      font-size: 13px;
-      color: var(--gray);
-      line-height: 1.6;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
     }
+ 
+    /* ── ABOUT SECTION ── */
+    .about-section { background: var(--black); }
+ 
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+ 
+    .about-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 48px;
+    }
+ 
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 24px 20px;
+    }
+ 
+    .stat-number {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+ 
+    .stat-label {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+ 
+    .about-visual {
+      position: relative;
+      height: 420px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+ 
+    .orbit-svg {
+      width: 320px;
+      height: 320px;
+      opacity: 0.7;
+    }
+ 
+    /* ── SUBSCRIBE SECTION ── */
+    .subscribe-section {
+      background: var(--deep);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+ 
+    .subscribe-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 100px 40px;
+      text-align: center;
+    }
+ 
+    .subscribe-form {
+      display: flex;
+      gap: 10px;
+      margin: 40px 0 16px;
+    }
+ 
+    .subscribe-input {
+      flex: 1;
+      padding: 15px 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+ 
+    .subscribe-input:focus { border-color: var(--green); }
+    .subscribe-input::placeholder { color: var(--text-muted); }
+ 
+    .subscribe-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+ 
+    .subscribe-note a { color: var(--green); text-decoration: none; }
  
     /* ── FOOTER ── */
     footer {
-      margin-top: 80px;
-      text-align: center;
-      font-size: 12px;
-      color: var(--gray);
-      padding-bottom: 40px;
-      animation: fadeUp 0.8s ease 0.6s both;
-    }
- 
-    footer a {
-      color: var(--green);
-      text-decoration: none;
-    }
- 
-    .footer-social {
+      position: relative;
+      z-index: 1;
+      padding: 48px 40px;
+      border-top: 1px solid rgba(255,255,255,0.06);
       display: flex;
-      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
       gap: 20px;
-      margin-bottom: 12px;
     }
  
-    .footer-accent {
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--blue), var(--green));
-      margin: 16px auto;
-      border-radius: 2px;
+    .footer-brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: 0.05em;
+    }
+ 
+    .footer-brand span { color: var(--green); }
+ 
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+ 
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+ 
+    .footer-links a:hover { color: var(--green); }
+ 
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-muted);
+      width: 100%;
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 12px;
     }
  
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav { padding: 12px 20px; flex-wrap: nowrap; gap: 8px; }
-      .nav-tagline { display: none; }
-      .nav-divider { display: none; }
-      .nav-social { display: none !important; }
-      .nav-links { gap: 0; }
-      .subscribe-btn { width: 100%; }
-      .features { grid-template-columns: 1fr 1fr; gap: 12px; }
+      nav { padding: 14px 20px; }
+      .nav-tagline, .nav-divider { display: none; }
+      .nav-links { gap: 8px; }
+      .nav-links a.nav-social { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-visual { height: 260px; }
+      .section-inner { padding: 60px 24px; }
+      .subscribe-form { flex-direction: column; }
+      .about-stat-grid { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
  
-  <!-- Orbital background SVG -->
-  <svg class="orbital-bg" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="450" cy="450" rx="380" ry="120" fill="none" stroke="#0C447C" stroke-width="2" transform="rotate(-15 450 450)"/>
-    <ellipse cx="450" cy="450" rx="290" ry="88" fill="none" stroke="#00A060" stroke-width="1.5" stroke-dasharray="12 8" transform="rotate(12 450 450)"/>
-    <circle cx="450" cy="450" r="60" fill="none" stroke="#0C447C" stroke-width="1.5"/>
-    <circle cx="178" cy="348" r="6" fill="#0C447C"/>
-    <circle cx="722" cy="552" r="6" fill="#0C447C"/>
-    <circle cx="240" cy="530" r="4" fill="#00A060"/>
-    <circle cx="660" cy="370" r="4" fill="#00A060"/>
-  </svg>
+<!-- Star field -->
+<canvas id="stars-canvas"></canvas>
  
-  <!-- Nav -->
-  <nav>
-    <a class="nav-logo" href="/">
-      <span class="nav-nds">NDS</span>
-      <div class="nav-divider"></div>
-      <span class="nav-tagline">Non-Dilutive Space</span>
-    </a>
-    <div class="nav-links">
-      <a href="https://x.com/NDSpaceHQ" target="_blank" class="nav-social">X / Twitter</a>
-      <a href="https://instagram.com/NonDilutiveSpace" target="_blank" class="nav-social">Instagram</a>
-      <a href="https://nondilutivespace.beehiiv.com/subscribe" class="nav-cta" target="_blank">Subscribe 🛸</a>
-    </div>
-  </nav>
+<!-- Nav -->
+<nav>
+  <a class="nav-logo" href="/">
+    <span class="nav-nds">NDS<span>.</span></span>
+    <div class="nav-divider"></div>
+    <span class="nav-tagline">Non-Dilutive Space</span>
+  </a>
+  <div class="nav-links">
+    <a href="https://x.com/NDSpaceHQ" target="_blank" class="nav-social">X / Twitter</a>
+    <a href="https://instagram.com/NonDilutiveSpace" target="_blank" class="nav-social">Instagram</a>
+    <a href="https://nondilutivespace.beehiiv.com" target="_blank" class="nav-social">Archive</a>
+    <a href="https://nondilutivespace.beehiiv.com/subscribe" class="nav-cta" target="_blank">Subscribe 🛸</a>
+  </div>
+</nav>
  
-  <!-- Main page -->
-  <div class="page">
-    <div class="hero">
+<!-- Hero -->
+<section class="hero">
+  <canvas id="launch-canvas"></canvas>
  
-      <!-- Live badge -->
-      <div class="hero-badge">
-        <div class="badge-dot"></div>
-        Weekly newsletter — every Tuesday
-      </div>
- 
-      <!-- NDS mark -->
-      <div class="hero-title">NDS</div>
- 
-      <div class="hero-wordmark">
-        <span class="wm-blue">NON-DILUTIVE</span>
-        <div class="wm-divider"></div>
-        <span class="wm-green">SPACE</span>
-      </div>
- 
-      <p class="hero-sub">
-        <strong>Space &amp; connectivity funding intelligence.</strong><br/>
-        Curated every Tuesday for founders, program managers &amp; investors.
-      </p>
- 
-      <p class="hero-desc">
-        SBIR/STTR, federal grants, foundation funding, RFPs &amp; procurement intel, space news, and remote/hybrid ops &amp; connectivity jobs —
-        all in one sharp weekly briefing. No fluff. No equity required.
-      </p>
- 
-      <!-- Subscribe -->
-      <div class="subscribe-wrap">
-        <div style="display:flex; justify-content:center; margin-bottom:12px;">
-          <button class="subscribe-btn" onclick="window.open('https://nondilutivespace.beehiiv.com/subscribe','_blank')">SUBSCRIBE 🛸</button>
-        </div>
-        <p class="subscribe-note">
-          Unsubscribe anytime. &nbsp;·&nbsp;
-          <a href="https://nondilutivespace.beehiiv.com" target="_blank">View past issues</a>
-        </p>
-      </div>
- 
-      <!-- Content pillars -->
-      <div class="pillars">
-        <div class="pillar"><div class="pillar-dot"></div>SBIR &amp; STTR</div>
-        <div class="pillar"><div class="pillar-dot"></div>Federal Grants</div>
-        <div class="pillar"><div class="pillar-dot"></div>Foundation Funding</div>
-        <div class="pillar"><div class="pillar-dot"></div>RFPs &amp; Procurement</div>
-        <div class="pillar"><div class="pillar-dot"></div>Space &amp; Connectivity News</div>
-        <div class="pillar"><div class="pillar-dot"></div>Ops &amp; PM Jobs</div>
-      </div>
- 
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      Weekly — Every Tuesday
     </div>
  
-    <!-- Feature cards -->
-    <div class="features">
- 
-      <div class="feature-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div class="feature-icon" style="margin-bottom:0;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0C447C" stroke-width="2" stroke-linecap="round">
-              <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
-            </svg>
-          </div>
-          <span style="font-size:10px;font-weight:600;letter-spacing:1px;color:#00A060;background:#E1F5EE;border:1px solid #9FE1CB;border-radius:100px;padding:3px 10px;">IN NEWSLETTER</span>
-        </div>
-        <div class="feature-title">FUNDING SPOTLIGHT</div>
-        <div class="feature-desc">Open SBIR, STTR, federal grants, and NASA ROSES opportunities for space &amp; connectivity companies — deadlines and direct links every Tuesday.</div>
-      </div>
- 
-      <div class="feature-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div class="feature-icon" style="margin-bottom:0;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7F77DD" stroke-width="2" stroke-linecap="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-            </svg>
-          </div>
-          <span style="font-size:10px;font-weight:600;letter-spacing:1px;color:#00A060;background:#E1F5EE;border:1px solid #9FE1CB;border-radius:100px;padding:3px 10px;">IN NEWSLETTER</span>
-        </div>
-        <div class="feature-title">FOUNDATION FUNDING</div>
-        <div class="feature-desc">Curated opportunities from Simons, Kavli, NSF, Moore, Schmidt Futures and other major foundations funding space, physics, and deep tech.</div>
-      </div>
- 
-      <div class="feature-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div class="feature-icon" style="margin-bottom:0;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round">
-              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-            </svg>
-          </div>
-          <span style="font-size:10px;font-weight:600;letter-spacing:1px;color:#00A060;background:#E1F5EE;border:1px solid #9FE1CB;border-radius:100px;padding:3px 10px;">IN NEWSLETTER</span>
-        </div>
-        <div class="feature-title">RFPs &amp; PROCUREMENT</div>
-        <div class="feature-desc">Construction, backhaul, connectivity, and telecom RFPs from state broadband offices, telecoms, and large primes — curated weekly.</div>
-      </div>
- 
-      <div class="feature-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div class="feature-icon" style="margin-bottom:0;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0C447C" stroke-width="2" stroke-linecap="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-            </svg>
-          </div>
-          <span style="font-size:10px;font-weight:600;letter-spacing:1px;color:#00A060;background:#E1F5EE;border:1px solid #9FE1CB;border-radius:100px;padding:3px 10px;">IN NEWSLETTER</span>
-        </div>
-        <div class="feature-title">SPACE &amp; CONNECTIVITY NEWS</div>
-        <div class="feature-desc">Top space, satellite, 5G, LEO, and connectivity industry stories — filtered for what matters to operators, founders, and investors.</div>
-      </div>
- 
-      <div class="feature-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div class="feature-icon" style="margin-bottom:0;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0C447C" stroke-width="2" stroke-linecap="round">
-              <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
-            </svg>
-          </div>
-          <span style="font-size:10px;font-weight:600;letter-spacing:1px;color:#185FA5;background:#E6F1FB;border:1px solid #B5D4F4;border-radius:100px;padding:3px 10px;">COMING SOON</span>
-        </div>
-        <div class="feature-title">JOBS BOARD</div>
-        <div class="feature-desc">Remote/hybrid ops, grants, program management, and global connectivity roles — searchable and updated weekly. Built for the non-technical space workforce.</div>
-      </div>
- 
-      <div class="feature-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div class="feature-icon" style="margin-bottom:0;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00A060" stroke-width="2" stroke-linecap="round">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-            </svg>
-          </div>
-          <span style="font-size:10px;font-weight:600;letter-spacing:1px;color:#185FA5;background:#E6F1FB;border:1px solid #B5D4F4;border-radius:100px;padding:3px 10px;">COMING SOON</span>
-        </div>
-        <div class="feature-title">FUNDING DATABASE</div>
-        <div class="feature-desc">Searchable database of every non-dilutive funding opportunity — SBIR, grants, foundations, and RFPs — always current.</div>
-      </div>
- 
-      <div class="feature-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div class="feature-icon" style="margin-bottom:0;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round">
-              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
-            </svg>
-          </div>
-          <span style="font-size:10px;font-weight:600;letter-spacing:1px;color:#185FA5;background:#E6F1FB;border:1px solid #B5D4F4;border-radius:100px;padding:3px 10px;">COMING SOON</span>
-        </div>
-        <div class="feature-title">RFP/RFI/RFA TRACKER</div>
-        <div class="feature-desc">Live tracker of open RFPs, RFIs, and RFAs from state broadband offices, telecoms, and large primes — searchable by state, type, and deadline.</div>
-      </div>
- 
-      <div class="feature-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div class="feature-icon" style="margin-bottom:0;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7F77DD" stroke-width="2" stroke-linecap="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-            </svg>
-          </div>
-          <span style="font-size:10px;font-weight:600;letter-spacing:1px;color:#185FA5;background:#E6F1FB;border:1px solid #B5D4F4;border-radius:100px;padding:3px 10px;">COMING SOON</span>
-        </div>
-        <div class="feature-title">FOUNDATION TRACKER</div>
-        <div class="feature-desc">Searchable database of foundation funding opportunities in space, physics, mathematics, and deep tech — with deadlines, focus areas, and eligibility.</div>
-      </div>
- 
+    <div class="hero-headline">
+      Non&#8209;<br class="mob-br">Dilutive<br>
+      <span class="green">Space</span>
     </div>
  
-    <!-- Footer -->
-    <footer>
-      <div class="footer-social">
-        <a href="https://x.com/NDSpaceHQ" target="_blank">X / Twitter @NDSpaceHQ</a>
-        <a href="https://instagram.com/NonDilutiveSpace" target="_blank">Instagram @NonDilutiveSpace</a>
-      </div>
-      <div class="footer-accent"></div>
-      <p>© 2026 Non-Dilutive Space &nbsp;·&nbsp; Built for the space economy</p>
-    </footer>
+    <div class="hero-sub-headline">Space &amp; Connectivity Funding Intelligence</div>
+ 
+    <p class="hero-desc">
+      <strong>SBIR/STTR, federal grants, foundation funding, RFPs &amp; procurement intel,
+      space news, and remote ops &amp; PM jobs</strong> — curated every Tuesday
+      for founders, program managers &amp; investors. No fluff. No equity required.
+    </p>
+ 
+    <div class="hero-cta-group">
+      <a href="https://nondilutivespace.beehiiv.com/subscribe" target="_blank" class="btn-primary">Subscribe Free 🛸</a>
+      <a href="https://nondilutivespace.beehiiv.com" target="_blank" class="btn-ghost">View Past Issues</a>
+    </div>
+ 
+    <div class="pillars">
+      <div class="pillar"><div class="pillar-dot"></div>SBIR &amp; STTR</div>
+      <div class="pillar"><div class="pillar-dot"></div>Federal Grants</div>
+      <div class="pillar"><div class="pillar-dot"></div>Foundation Funding</div>
+      <div class="pillar"><div class="pillar-dot"></div>RFPs &amp; Procurement</div>
+      <div class="pillar"><div class="pillar-dot"></div>Space &amp; Connectivity News</div>
+      <div class="pillar"><div class="pillar-dot"></div>Ops &amp; PM Jobs</div>
+    </div>
   </div>
  
-  <script>
-  </script>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
  
+<!-- Features -->
+<section class="features-section">
+  <div class="section-inner">
+    <div class="section-label">What's Inside</div>
+    <h2 class="section-title">Every Tuesday<br>In Your Inbox</h2>
+    <p class="section-sub">Eight sections of curated funding intelligence — the research done so you don't have to.</p>
+ 
+    <div class="features-grid">
+ 
+      <div class="feature-card">
+        <div class="feature-tag tag-live">In Newsletter</div>
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E87A" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="feature-title">Funding Spotlight</div>
+        <div class="feature-desc">Open SBIR, STTR, federal grants, and NASA ROSES opportunities — deadlines and direct links every Tuesday.</div>
+      </div>
+ 
+      <div class="feature-card">
+        <div class="feature-tag tag-live">In Newsletter</div>
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E87A" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="feature-title">Foundation Funding</div>
+        <div class="feature-desc">Simons, Kavli, NSF, Moore, Schmidt Futures and other major foundations funding space, physics, and deep tech.</div>
+      </div>
+ 
+      <div class="feature-card">
+        <div class="feature-tag tag-live">In Newsletter</div>
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E87A" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="feature-title">RFPs &amp; Procurement</div>
+        <div class="feature-desc">Construction, backhaul, connectivity, and telecom RFPs from state broadband offices, telecoms, and large primes.</div>
+      </div>
+ 
+      <div class="feature-card">
+        <div class="feature-tag tag-live">In Newsletter</div>
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E87A" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="feature-title">Space &amp; Connectivity News</div>
+        <div class="feature-desc">Top space, satellite, 5G, LEO, and connectivity stories — filtered for operators, founders, and investors.</div>
+      </div>
+ 
+      <div class="feature-card">
+        <div class="feature-tag tag-live">In Newsletter</div>
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E87A" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div class="feature-title">Off the Record</div>
+        <div class="feature-desc">Insider tips on grants compliance, proposal strategy, and program management — from someone who's been on both sides.</div>
+      </div>
+ 
+      <div class="feature-card coming-soon">
+        <div class="feature-tag tag-soon">Coming Soon</div>
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        </div>
+        <div class="feature-title">Jobs Board</div>
+        <div class="feature-desc">Remote/hybrid ops, grants, PM, and connectivity roles — searchable and updated weekly for the non-technical space workforce.</div>
+      </div>
+ 
+      <div class="feature-card coming-soon">
+        <div class="feature-tag tag-soon">Coming Soon</div>
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        </div>
+        <div class="feature-title">Funding Database</div>
+        <div class="feature-desc">Searchable database of every non-dilutive opportunity — SBIR, grants, foundations, and RFPs — always current.</div>
+      </div>
+ 
+      <div class="feature-card coming-soon">
+        <div class="feature-tag tag-soon">Coming Soon</div>
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="feature-title">RFP/RFI Tracker</div>
+        <div class="feature-desc">Live tracker of open RFPs, RFIs, and RFAs — searchable by state, type, and deadline.</div>
+      </div>
+ 
+    </div>
+  </div>
+</section>
+ 
+<!-- About -->
+<section class="about-section">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">About</div>
+        <h2 class="section-title">Built for the<br><span style="color:var(--green)">Space Economy</span></h2>
+        <p class="section-sub">
+          Non-Dilutive Space is a weekly funding intelligence newsletter for space and connectivity founders, program managers, and investors who need to know where the non-equity capital is — before the competition does.
+        </p>
+        <p style="font-size:15px;font-weight:300;color:var(--text-muted);line-height:1.7;margin-top:20px;">
+          No VC hype. No equity required. Just clean, actionable intelligence on SBIR/STTR, federal grants, foundation funding, RFPs, and the jobs and news that matter in the space economy.
+        </p>
+        <div class="about-stat-grid">
+          <div class="stat-card">
+            <div class="stat-number">8</div>
+            <div class="stat-label">Sections per issue</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">52</div>
+            <div class="stat-label">Issues per year</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">$0</div>
+            <div class="stat-label">Equity required</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">Tue</div>
+            <div class="stat-label">In your inbox, weekly</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="about-visual">
+          <svg class="orbit-svg" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer orbit -->
+            <ellipse cx="160" cy="160" rx="140" ry="44" fill="none" stroke="rgba(0,232,122,0.2)" stroke-width="1" transform="rotate(-15 160 160)"/>
+            <!-- Middle orbit -->
+            <ellipse cx="160" cy="160" rx="100" ry="32" fill="none" stroke="rgba(0,232,122,0.15)" stroke-width="1" stroke-dasharray="8 6" transform="rotate(20 160 160)"/>
+            <!-- Inner orbit -->
+            <ellipse cx="160" cy="160" rx="62" ry="20" fill="none" stroke="rgba(12,68,124,0.5)" stroke-width="1" transform="rotate(-5 160 160)"/>
+            <!-- Planet -->
+            <circle cx="160" cy="160" r="22" fill="#060C14" stroke="rgba(0,232,122,0.4)" stroke-width="1.5"/>
+            <circle cx="160" cy="160" r="14" fill="rgba(0,232,122,0.1)" stroke="rgba(0,232,122,0.3)" stroke-width="1"/>
+            <text x="160" y="165" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" font-weight="800" fill="#00E87A" letter-spacing="1">NDS</text>
+            <!-- Satellites -->
+            <circle cx="292" cy="132" r="5" fill="#00E87A" opacity="0.9"/>
+            <circle cx="28" cy="188" r="5" fill="#00E87A" opacity="0.9"/>
+            <circle cx="215" cy="66" r="3.5" fill="rgba(0,232,122,0.6)"/>
+            <circle cx="105" cy="254" r="3.5" fill="rgba(0,232,122,0.6)"/>
+            <circle cx="240" cy="230" r="2.5" fill="rgba(255,255,255,0.3)"/>
+            <circle cx="80" cy="90" r="2.5" fill="rgba(255,255,255,0.3)"/>
+            <!-- Stars bg -->
+            <circle cx="40" cy="40" r="1" fill="rgba(255,255,255,0.4)"/>
+            <circle cx="280" cy="60" r="1" fill="rgba(255,255,255,0.4)"/>
+            <circle cx="300" cy="260" r="1" fill="rgba(255,255,255,0.4)"/>
+            <circle cx="20" cy="270" r="1.5" fill="rgba(255,255,255,0.3)"/>
+            <circle cx="150" cy="20" r="1" fill="rgba(255,255,255,0.4)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- Subscribe -->
+<section class="subscribe-section">
+  <div class="subscribe-inner">
+    <div class="section-label" style="justify-content:center;">Free to Start</div>
+    <h2 class="section-title" style="font-size:clamp(40px,7vw,72px);">Get the<br><span style="color:var(--green)">Funding Edge</span></h2>
+    <p class="section-sub" style="margin:0 auto;text-align:center;">
+      Join founders, program managers, and investors who read Non-Dilutive Space every Tuesday morning.
+    </p>
+    <div class="subscribe-form">
+      <input class="subscribe-input" type="email" placeholder="your@email.com"/>
+      <a href="https://nondilutivespace.beehiiv.com/subscribe" target="_blank" class="btn-primary" style="white-space:nowrap;">Subscribe Free</a>
+    </div>
+    <p class="subscribe-note">
+      Unsubscribe anytime &nbsp;·&nbsp;
+      <a href="https://nondilutivespace.beehiiv.com" target="_blank">View past issues</a>
+    </p>
+  </div>
+</section>
+ 
+<!-- Footer -->
+<footer>
+  <div class="footer-brand">NON&#8209;DILUTIVE <span>SPACE</span></div>
+  <div class="footer-links">
+    <a href="https://x.com/NDSpaceHQ" target="_blank">X / Twitter</a>
+    <a href="https://instagram.com/NonDilutiveSpace" target="_blank">Instagram</a>
+    <a href="https://nondilutivespace.beehiiv.com" target="_blank">Newsletter</a>
+  </div>
+  <div class="footer-copy">© 2026 Non-Dilutive Space &nbsp;·&nbsp; Built for the space economy &nbsp;·&nbsp; Portland, ME</div>
+</footer>
+ 
+<script>
+// ── STAR FIELD ──
+(function() {
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let W, H;
+ 
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+ 
+  function initStars() {
+    stars = [];
+    const count = Math.floor((W * H) / 4000);
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.4 + 0.2,
+        opacity: Math.random() * 0.7 + 0.1,
+        twinkleSpeed: Math.random() * 0.02 + 0.005,
+        twinkleOffset: Math.random() * Math.PI * 2,
+        drift: (Math.random() - 0.5) * 0.015,
+      });
+    }
+  }
+ 
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    t += 0.016;
+    for (const s of stars) {
+      const twinkle = Math.sin(t * s.twinkleSpeed * 60 + s.twinkleOffset) * 0.35 + 0.65;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${s.opacity * twinkle})`;
+      ctx.fill();
+      s.x += s.drift;
+      if (s.x < 0) s.x = W;
+      if (s.x > W) s.x = 0;
+    }
+    requestAnimationFrame(draw);
+  }
+ 
+  resize();
+  initStars();
+  draw();
+  window.addEventListener('resize', () => { resize(); initStars(); });
+})();
+ 
+// ── ROCKET LAUNCH ──
+(function() {
+  const canvas = document.getElementById('launch-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 500, H = 500;
+  canvas.width = W;
+  canvas.height = H;
+ 
+  // Rocket state
+  let rocket = {
+    x: W / 2,
+    y: H - 60,
+    vy: 0,
+    launched: false,
+    phase: 'idle', // idle | countdown | launching | flying | gone | reset
+    countdown: 3,
+    countdownTimer: 0,
+    opacity: 1,
+    trailParticles: [],
+    exhaustParticles: [],
+    smokeParticles: [],
+    idleTimer: 0,
+  };
+ 
+  // Particles
+  function spawnExhaust() {
+    for (let i = 0; i < 6; i++) {
+      rocket.exhaustParticles.push({
+        x: rocket.x + (Math.random() - 0.5) * 12,
+        y: rocket.y + 48,
+        vx: (Math.random() - 0.5) * 1.8,
+        vy: Math.random() * 3 + 2,
+        life: 1,
+        decay: Math.random() * 0.04 + 0.025,
+        r: Math.random() * 5 + 3,
+        color: Math.random() > 0.5 ? '#00E87A' : '#FFA020',
+      });
+    }
+  }
+ 
+  function spawnSmoke() {
+    for (let i = 0; i < 3; i++) {
+      rocket.smokeParticles.push({
+        x: rocket.x + (Math.random() - 0.5) * 30,
+        y: rocket.y + 50 + Math.random() * 20,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: Math.random() * 0.5 + 0.2,
+        life: 1,
+        decay: Math.random() * 0.008 + 0.004,
+        r: Math.random() * 14 + 8,
+      });
+    }
+  }
+ 
+  function spawnTrail() {
+    rocket.trailParticles.push({
+      x: rocket.x + (Math.random() - 0.5) * 8,
+      y: rocket.y + 44,
+      vx: (Math.random() - 0.5) * 2,
+      vy: Math.random() * 4 + 2,
+      life: 1,
+      decay: Math.random() * 0.03 + 0.02,
+      r: Math.random() * 4 + 2,
+      color: Math.random() > 0.4 ? '#00E87A' : (Math.random() > 0.5 ? '#FFA020' : '#FFDD60'),
+    });
+  }
+ 
+  function drawRocket(x, y, opacity) {
+    ctx.save();
+    ctx.globalAlpha = opacity;
+    ctx.translate(x, y);
+ 
+    // Exhaust nozzle
+    ctx.beginPath();
+    ctx.moveTo(-10, 38);
+    ctx.lineTo(10, 38);
+    ctx.lineTo(7, 48);
+    ctx.lineTo(-7, 48);
+    ctx.closePath();
+    ctx.fillStyle = '#444';
+    ctx.fill();
+ 
+    // Body
+    ctx.beginPath();
+    ctx.roundRect(-12, -10, 24, 50, 4);
+    ctx.fillStyle = '#e8edf5';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+ 
+    // Nose cone
+    ctx.beginPath();
+    ctx.moveTo(-12, -10);
+    ctx.quadraticCurveTo(-12, -42, 0, -50);
+    ctx.quadraticCurveTo(12, -42, 12, -10);
+    ctx.closePath();
+    ctx.fillStyle = '#00E87A';
+    ctx.fill();
+ 
+    // NDS stripe
+    ctx.fillStyle = '#0C447C';
+    ctx.fillRect(-12, 8, 24, 8);
+ 
+    // NDS text
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 6px Barlow Condensed, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('NDS', 0, 15);
+ 
+    // Fins left
+    ctx.beginPath();
+    ctx.moveTo(-12, 30);
+    ctx.lineTo(-24, 46);
+    ctx.lineTo(-12, 40);
+    ctx.closePath();
+    ctx.fillStyle = '#00E87A';
+    ctx.fill();
+ 
+    // Fins right
+    ctx.beginPath();
+    ctx.moveTo(12, 30);
+    ctx.lineTo(24, 46);
+    ctx.lineTo(12, 40);
+    ctx.closePath();
+    ctx.fillStyle = '#00E87A';
+    ctx.fill();
+ 
+    // Window
+    ctx.beginPath();
+    ctx.arc(0, -2, 6, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(100,160,255,0.7)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+ 
+    ctx.restore();
+  }
+ 
+  function drawLaunchPad(x, y) {
+    ctx.save();
+    ctx.globalAlpha = 0.6;
+    ctx.translate(x, y);
+ 
+    // Pad base
+    ctx.fillStyle = '#1a2a3a';
+    ctx.fillRect(-60, 0, 120, 12);
+ 
+    // Pad legs
+    ctx.fillStyle = '#243447';
+    ctx.fillRect(-40, -20, 8, 20);
+    ctx.fillRect(32, -20, 8, 20);
+    ctx.fillRect(-8, -12, 16, 12);
+ 
+    // Gantry arm
+    ctx.strokeStyle = '#2d4a6a';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(38, -80);
+    ctx.lineTo(38, 0);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(38, -60);
+    ctx.lineTo(16, -60);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(38, -35);
+    ctx.lineTo(16, -35);
+    ctx.stroke();
+ 
+    ctx.restore();
+  }
+ 
+  function drawCountdown(num, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.font = 'bold 48px Barlow Condensed, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#00E87A';
+    ctx.fillText(num > 0 ? num : 'LAUNCH', W / 2, H / 2 - 40);
+    ctx.restore();
+  }
+ 
+  let t = 0;
+  let countdownDisplay = 0;
+  let countdownAlpha = 0;
+  let launchDelay = 180; // frames before first launch
+ 
+  function update() {
+    t++;
+ 
+    // Countdown display
+    if (rocket.phase === 'countdown') {
+      rocket.countdownTimer++;
+      if (rocket.countdownTimer % 60 === 0) {
+        rocket.countdown--;
+        countdownDisplay = rocket.countdown;
+        countdownAlpha = 1;
+        if (rocket.countdown <= 0) {
+          rocket.phase = 'launching';
+          countdownDisplay = 0; // LAUNCH text
+        }
+      }
+      countdownAlpha = Math.max(0, countdownAlpha - 0.025);
+      spawnSmoke();
+    }
+ 
+    if (rocket.phase === 'idle') {
+      rocket.idleTimer++;
+      // Gentle idle bob
+      rocket.y = (H - 60) + Math.sin(t * 0.02) * 2;
+      if (rocket.idleTimer > launchDelay) {
+        rocket.phase = 'countdown';
+        rocket.countdown = 3;
+        rocket.countdownTimer = 0;
+        countdownDisplay = 3;
+        countdownAlpha = 1;
+      }
+    }
+ 
+    if (rocket.phase === 'launching') {
+      spawnExhaust();
+      spawnSmoke();
+      rocket.vy -= 0.08;
+      if (rocket.vy < -0.5) {
+        rocket.phase = 'flying';
+      }
+    }
+ 
+    if (rocket.phase === 'flying') {
+      spawnExhaust();
+      spawnTrail();
+      rocket.vy -= 0.22;
+      rocket.y += rocket.vy;
+      if (rocket.y < -120) {
+        rocket.phase = 'gone';
+        rocket.goneTimer = 0;
+      }
+    }
+ 
+    if (rocket.phase === 'gone') {
+      rocket.goneTimer++;
+      if (rocket.goneTimer > 120) {
+        // Reset
+        rocket.y = H - 60;
+        rocket.vy = 0;
+        rocket.phase = 'idle';
+        rocket.idleTimer = 0;
+        rocket.countdown = 3;
+        launchDelay = 240;
+        rocket.trailParticles = [];
+        rocket.exhaustParticles = [];
+        rocket.smokeParticles = [];
+      }
+    }
+ 
+    // Update exhaust
+    rocket.exhaustParticles = rocket.exhaustParticles.filter(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= p.decay;
+      p.r *= 0.97;
+      return p.life > 0;
+    });
+ 
+    // Update trail
+    rocket.trailParticles = rocket.trailParticles.filter(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= p.decay;
+      return p.life > 0;
+    });
+ 
+    // Update smoke
+    rocket.smokeParticles = rocket.smokeParticles.filter(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= p.decay;
+      p.r += 0.3;
+      return p.life > 0;
+    });
+  }
+ 
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+ 
+    // Draw smoke
+    for (const p of rocket.smokeParticles) {
+      ctx.save();
+      ctx.globalAlpha = p.life * 0.18;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(180,200,220,1)';
+      ctx.fill();
+      ctx.restore();
+    }
+ 
+    // Draw trail particles
+    for (const p of rocket.trailParticles) {
+      ctx.save();
+      ctx.globalAlpha = p.life * 0.8;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.restore();
+    }
+ 
+    // Draw exhaust
+    for (const p of rocket.exhaustParticles) {
+      ctx.save();
+      ctx.globalAlpha = p.life * 0.85;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.restore();
+    }
+ 
+    // Launch pad
+    if (rocket.phase !== 'gone') {
+      drawLaunchPad(W / 2, H - 48);
+    }
+ 
+    // Countdown
+    if (rocket.phase === 'countdown' || (rocket.phase === 'launching' && countdownAlpha > 0)) {
+      countdownAlpha = Math.max(0, countdownAlpha - 0.015);
+      drawCountdown(countdownDisplay, countdownAlpha);
+    }
+ 
+    // Rocket
+    if (rocket.phase !== 'gone') {
+      drawRocket(rocket.x, rocket.y, 1);
+    }
+ 
+    update();
+    requestAnimationFrame(draw);
+  }
+ 
+  draw();
+})();
+ 
+// ── NAV SCROLL ──
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 60) {
+    nav.style.background = 'rgba(2,4,8,0.95)';
+  } else {
+    nav.style.background = 'rgba(2,4,8,0.7)';
+  }
+});
+ 
+// ── INTERSECTION OBSERVER for section reveals ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+ 
+document.querySelectorAll('.feature-card, .stat-card, .about-visual').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+</script>
 </body>
 </html>
+ 
